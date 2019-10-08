@@ -1,0 +1,15 @@
+{
+	"welcomeFile": "index.html",
+	"authenticationMethod": "route",
+	"routes": [{
+		"source": "/node(.*)",
+		"destination": "srv_api",
+		"csrfProtection": true,
+		"authenticationType": "none"
+	},{
+		"source": "/socket.io(.*)",
+		"destination": "srv_api",
+		"csrfProtection": true,
+		"authenticationType": "none"
+	}]
+}

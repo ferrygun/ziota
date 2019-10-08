@@ -1,0 +1,48 @@
+<html>
+  <title>IOTA Tangle with SAP HANA XSA and Cloud Analytics</title>
+  <body>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+		function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener){
+                element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+        
+        var socket = io.connect();
+        
+        var iframeSource = 'https://pfizer-test.us10.sapanalytics.cloud/sap/fpa/ui/tenants/1c966/bo/application/C9DB22EDEE3DF7BFAEDD6A0820D188D2?mode=embed';
+        // Create the iframe
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('src', iframeSource);
+        iframe.setAttribute('id', 'the_iframe');
+        iframe.setAttribute('frameborder', 0);
+        iframe.setAttribute('style', 'overflow: hidden; height: 100%; width: 100%; position: absolute;');
+
+        document.body.appendChild(iframe);
+        
+        // Send a message to the child iframe        
+        var iframeEl = document.getElementById('the_iframe');
+        // Send a message to the child iframe
+        var sendMessage = function(msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            iframeEl.contentWindow.postMessage(msg, '*');
+        };
+        
+        
+        // Listen to message from child window
+        bindEvent(window, 'message', function (e) {
+            console.log(e.data);
+        });
+        
+        socket.on('client_data', function(data){
+         	console.log(data.data);
+         	var temperature = data.data.toString();
+         	sendMessage(temperature);
+         });
+	</script>
+  </body>
+</html>
