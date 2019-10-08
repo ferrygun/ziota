@@ -13,13 +13,13 @@ modules:
        properties:
          url: '${default-url}'
    requires:
-     - name: zearnpfe-uaa
+     - name: ziota-uaa
 
  - name: web
    type: html5
    path: web
    requires:
-     - name: zearnpfe-uaa
+     - name: ziota-uaa
      - name: srv_api
        group: destinations
        properties:
@@ -28,7 +28,7 @@ modules:
          forwardAuthToken: true
 
 resources:
-  - name: zearnpfe-uaa
+  - name: ziota-uaa
     type: com.sap.xs.uaa-space
     parameters:
       config-path: ./xs-security.json
